@@ -1,27 +1,34 @@
 
-import tkinter as tk
+from tkinter import *
 
-import time
+temp = 0
+after_id = ""
 
-def exit_programm():
-    print('exit')
+def tick():
+    global temp, after_id
+    after_id = root.after(1000, tick)
+    label1.configure(text=str(temp))
+    temp += 1
 
-def generator():
-    a = 0
-    while True:
-         a = a + 1
-         print(a)
-         time.sleep(1)
+def start_sw():
+    btn1.grid_forget()
+    btn2.grid(row=1, columnspan=2, sticky='ew')
+    tick()
 
-
-
-win = tk.Tk()
-win.geometry(f"240x270+100+200")
-win.title('моя кнопка')
+def close_window():
+    root.destroy()
 
 
-btn1 = tk.Button(win, text='Exit',
-                 command=exit_programm)
-btn1.pack()
+root =Tk()
 
-win.mainloop()
+root.title('Секундомер')
+
+label1 = Label(root, width=5, font=('Ubuntu', 100), text='0')
+label1.grid(row=0,columnspan=2)
+
+btn1 = Button(root, text='Start', font=('ubuntu', 30), command=start_sw)
+btn2 = Button(root, text='Exit', font=('ubuntu', 30), command=close_window)
+
+btn1.grid(row=1, columnspan=2, sticky='ew')
+
+root.mainloop()
